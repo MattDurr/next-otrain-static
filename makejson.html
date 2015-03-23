@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+
+<head>
+    <script src="js/jquery-1.7.2.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script>
+        var data;
+        var newMEGAData = [];
+
+        $(function(){
+        
+            //gota be a better way to init the array
+            var weekdayData = [ [ [],[],[],[],[] ], [ [],[],[],[],[] ] ];
+            $.getJSON("raw-otrain-weekday.json", function (stuff) {
+                data = stuff;
+                
+                for(direction in data){
+                    // dir0 is stating at GREENBORO
+                    // but next-otrain has direction index 0 stating at BAYVIEW
+                    // so swap index value
+                    var newDirIndex = (direction=="dir0")?1:0;
+                    
+                    var indexCount = 0;
+                    for (x in data[direction]) {
+                        
+                        // only go to the look at the index values that hold times, so far the first index is the station names, and the last two are direction notes
+                        if( indexCount > 0 && indexCount <= (Object.keys(data[direction]).length - 3) ){
+                            
+                            stationTimeArray = data[direction][x].split(",");
+
+                            for(stationIndex in stationTimeArray) {
+                                if(stationTimeArray[stationIndex] != "xx:xx") weekdayData[newDirIndex][stationIndex].push(stationTimeArray[stationIndex]);
+                            }
+
+                        } // end stations for in loop
+                        indexCount += 1;
+                    } // end for in loop
+                } // end directions for in loop
+                
+                newMEGAData.push(weekdayData);
+                console.log("weekdayData: " + JSON.stringify(weekdayData));
+                
+            }); // end weekday load and processing
+            
+            //gota be a better way to init the array
+            var saturdayData = [ [ [],[],[],[],[] ], [ [],[],[],[],[] ] ];
+            $.getJSON("raw-otrain-saturday.json", function (stuff) {
+                data = stuff;
+                
+                for(direction in data){
+                    // dir0 is stating at GREENBORO
+                    // but next-otrain has direction index 0 stating at BAYVIEW
+                    // so swap index value
+                    var newDirIndex = (direction=="dir0")?1:0;
+                    
+                    var indexCount = 0;
+                    for (x in data[direction]) {
+                        
+                        // only go to the look at the index values that hold times, so far the first index is the station names, and the last two are direction notes
+                        if( indexCount > 0 && indexCount <= (Object.keys(data[direction]).length - 3) ){
+                            
+                            stationTimeArray = data[direction][x].split(",");
+
+                            for(stationIndex in stationTimeArray) {
+                                if(stationTimeArray[stationIndex] != "xx:xx") saturdayData[newDirIndex][stationIndex].push(stationTimeArray[stationIndex]);
+                            }
+
+                        } // end stations for in loop
+                        indexCount += 1;
+                    } // end for in loop
+                } // end directions for in loop
+                
+                newMEGAData.push(saturdayData);
+                console.log("saturdayData: " + JSON.stringify(saturdayData));
+                
+            }); // end weekday load and processing
+            
+            
+            //gota be a better way to init the array
+            var sundayData = [ [ [],[],[],[],[] ], [ [],[],[],[],[] ] ];
+            $.getJSON("raw-otrain-sunday.json", function (stuff) {
+                data = stuff;
+                
+                for(direction in data){
+                    // dir0 is stating at GREENBORO
+                    // but next-otrain has direction index 0 stating at BAYVIEW
+                    // so swap index value
+                    var newDirIndex = (direction=="dir0")?1:0;
+                    
+                    var indexCount = 0;
+                    for (x in data[direction]) {
+                        
+                        // only go to the look at the index values that hold times, so far the first index is the station names, and the last two are direction notes
+                        if( indexCount > 0 && indexCount <= (Object.keys(data[direction]).length - 3) ){
+                            
+                            stationTimeArray = data[direction][x].split(",");
+
+                            for(stationIndex in stationTimeArray) {
+                                if(stationTimeArray[stationIndex] != "xx:xx") sundayData[newDirIndex][stationIndex].push(stationTimeArray[stationIndex]);
+                            }
+
+                        } // end stations for in loop
+                        indexCount += 1;
+                    } // end for in loop
+                } // end directions for in loop
+                
+                newMEGAData.push(sundayData);
+                console.log("sundayData: " + JSON.stringify(sundayData));
+                
+            }); // end weekday load and processing
+
+            
+        });
+        
+    </script>
+</head>
+
+</html>
