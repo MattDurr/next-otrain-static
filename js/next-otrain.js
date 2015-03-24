@@ -3,7 +3,7 @@ var data;
 //get times
 
 $(function(){
-   $.getJSON("/times.json", function (stuff) {
+   $.getJSON("http://mattdurr.github.io/next-otrain-static/times.json", function (stuff) {
       data = stuff;
       startTime();
    });
